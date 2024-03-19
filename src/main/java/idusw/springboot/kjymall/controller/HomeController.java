@@ -1,17 +1,27 @@
 package idusw.springboot.kjymall.controller;
 
 import idusw.springboot.kjymall.model.Member;
+import idusw.springboot.kjymall.service.HomeService;
+import idusw.springboot.kjymall.service.HomeServiceImpl3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping(value = {"/", "/1"}) // Get Method 요청으로 처리하라는 annotation
-    public String getRoot(){
+
+    private HomeService homeService = new HomeServiceImpl3(); // tightly-coupled
+    /*
+    public HomeController(HomeService homeService) { // loosely-coupled <- IoC Container, DI
+        this.homeService = homeService;
+    }
+    */
+    @GetMapping(value={"/", "/1"}) // Get Method 요청으로 처리하라는 annotation
+    public String getRoot() {
+        homeService.sayHello();
         // model : dto (data transfer object)
-        // -- model --> service --> model --> repository -> service -> controller -> view
-        return "main/index"; //view
+        // -- model --> service -- model --> repository -> service -> controller -> view
+        return "main/index"; // view
     }
 
     @GetMapping("/2")
