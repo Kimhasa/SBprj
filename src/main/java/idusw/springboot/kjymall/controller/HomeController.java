@@ -20,13 +20,18 @@ public class HomeController {
     // setter injection
 
     // loosely-coupled <- IoC Container, DI
-    private HomeService homeService;
+    private final HomeService homeService;
     public HomeController(HomeService homeService) {  // constructor injection
         this.homeService = homeService;
     }
 
+    @GetMapping(value={"/", ""})
+    public String goLogin() {
+        return "redirect:/members/login";
+    }
+
     // http://localhost:8080/?name=<value> : 값을 매개변수 값이 request객체에 저장됨
-    @GetMapping(value={"/", "/1"}) // Get Method 요청으로 처리하라는 annotation
+    @GetMapping(value={"/1"}) // Get Method 요청으로 처리하라는 annotation
     public String getRoot(HttpServletRequest request, Model model) {
         homeService.sayHello();
         // model : dto (data transfer object)

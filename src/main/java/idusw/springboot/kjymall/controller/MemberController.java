@@ -21,8 +21,8 @@ public class MemberController {
 
     // get방식으로 members/login을 요청하면 main/login 페이지로 이동
     @GetMapping("members/login")
-    public String getLogin(){
-
+    public String getLogin(Model model){
+        model.addAttribute("member", new Member());
         return "./main/login";
     }
 
@@ -33,15 +33,15 @@ public class MemberController {
         String pw = member.getPw();
 
         Member m = new Member();
+        String msg = "";
         if(id.equals("induk") && pw.equals("comso")){
-            m.setId("로그인 성공");
-            model.addAttribute("member", m);
+            msg = "로그인 성공";
         }
         else{
-            m.setId("로그인 성공");
-            model.addAttribute("member", m);
+            msg = "로그인 실패";
         }
 
-        return "./main/index";
+        model.addAttribute("member", msg);
+        return "./main/400";
     }
 }

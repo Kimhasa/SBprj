@@ -108,7 +108,7 @@
 							<div class="login-title">
 								<h2 class="text-center text-primary">Login To DeskApp</h2>
 							</div>
-							<form th:action="@{./members/login}" method="post">
+							<form th:action="@{../members/login}" th:object="${member}" method="post">
 								<div class="select-role">
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
 										<label class="btn active">
@@ -140,6 +140,8 @@
 								<div class="input-group custom">
 									<input
 										type="text"
+										th:field="*{id}"
+										name="id"
 										class="form-control form-control-lg"
 										placeholder="Username"
 									/>
@@ -152,6 +154,8 @@
 								<div class="input-group custom">
 									<input
 										type="password"
+										th:field="*{pw}"
+										name="pw"
 										class="form-control form-control-lg"
 										placeholder="**********"
 									/>
@@ -183,15 +187,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group mb-0">
-											<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-											<a
-												class="btn btn-primary btn-lg btn-block"
-												href="index.html"
-												>Sign In</a
-											>
+											<input type="submit" value="Sign In" class="btn btn-primary btn-lg btn-block">
 										</div>
 										<div
 											class="font-16 weight-600 pt-10 pb-10 text-center"
