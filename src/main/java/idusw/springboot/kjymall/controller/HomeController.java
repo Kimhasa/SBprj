@@ -27,7 +27,8 @@ public class HomeController {
 
     @GetMapping(value={"/", ""})
     public String goLogin() {
-        return "redirect:/members/login";
+        return "./main/index";
+//        return "redirect:/members/index";
     }
 
     // http://localhost:8080/?name=<value> : 값을 매개변수 값이 request객체에 저장됨

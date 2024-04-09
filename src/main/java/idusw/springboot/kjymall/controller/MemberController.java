@@ -1,6 +1,7 @@
 package idusw.springboot.kjymall.controller;
 
 import idusw.springboot.kjymall.model.Member;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,20 +29,30 @@ public class MemberController {
 
     // main/login.html 에서 폼을 통해 post 요청, 처리 후 main/index.html로 이동
     @PostMapping("members/login")
-    public String postLogin(@ModelAttribute("member") Member member, Model model){
+    public String postLogin(@ModelAttribute("member") Member member, Model model, HttpSession session){
         String id = member.getId();
         String pw = member.getPw();
 
+        String dbId = "induk";
+        String dbPw = "comso";
+
         Member m = new Member();
         String msg = "";
-        if(id.equals("induk") && pw.equals("comso")){
+        if(id.equals(dbId) && pw.equals(dbPw)){
+            session.setAttribute("id", id);
             msg = "로그인 성공";
         }
         else{
             msg = "로그인 실패";
         }
 
-        model.addAttribute("member", msg);
+        model.addAttribute("message", msg);
         return "./main/400";
+    }
+
+    @GetMapping("/members/logout")
+    public String getLogout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
     }
 }
