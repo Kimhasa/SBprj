@@ -55,4 +55,10 @@ public class MemberController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("members/register")
+    public String getRegister(Model model){
+        model.addAttribute("member", new Member());
+        return "./main/register";
+    }
 }
