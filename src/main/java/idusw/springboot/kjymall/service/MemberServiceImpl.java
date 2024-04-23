@@ -40,6 +40,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member loginById(Member member) {
+        //MemberRepository 메소드 호출
         memberRepository.findById(member.getIdx());
         return null;
     }
