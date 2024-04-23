@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class}) // Spring - Annotation : java, lombok, spring
+@SpringBootApplication //(exclude = {DataSourceAutoConfiguration.class}) // Spring - Annotation : java, lombok, spring
 //@Configuration
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class KjyMallApplication {

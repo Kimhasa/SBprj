@@ -44,7 +44,7 @@ public class HomeController {
 
     @GetMapping("/2")
     public String getIndex2(@RequestParam Map<String, String> param, Model model){
-        Member member = new Member();
+        Member member = Member.builder().build();
         member.setId("kjy");
         member.setName(param.get("name"));
         member.setEmail(param.get("email"));

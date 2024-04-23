@@ -1,6 +1,7 @@
 package idusw.springboot.kjymall.controller;
 
 import idusw.springboot.kjymall.model.Member;
+import idusw.springboot.kjymall.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MemberController {
+
+    final MemberService memberService;
+    public MemberController(MemberService memberService){
+        this.memberService = memberService;
+    }
+
     @GetMapping("members/{id}")
     public String getById(@PathVariable("id") String id, Model model){
-        Member member = new Member();
+//        Member member = new Member();
+        Member member = Member.builder().build();
         member.setId(id);
 
         model.addAttribute("member", member);
@@ -23,7 +31,7 @@ public class MemberController {
     // get방식으로 members/login을 요청하면 main/login 페이지로 이동
     @GetMapping("members/login")
     public String getLogin(Model model){
-        model.addAttribute("member", new Member());
+        model.addAttribute("member", Member.builder().build());
         return "./main/login";
     }
 
@@ -33,11 +41,17 @@ public class MemberController {
         String id = member.getId();
         String pw = member.getPw();
 
-        String dbId = "induk";
-        String dbPw = "comso";
-
-        Member m = new Member();
+        Member m = Member.builder()
+                .id(id)
+                .pw(pw)
+                .build();
         String msg = "";
+
+        Member ret = memberService.loginById(m);
+
+        String dbId = ret.getId();
+        String dbPw = ret.getPw();
+
         if(id.equals(dbId) && pw.equals(dbPw)){
             session.setAttribute("id", id);
             msg = "로그인 성공";
@@ -58,7 +72,7 @@ public class MemberController {
 
     @GetMapping("members/register")
     public String getRegister(Model model){
-        model.addAttribute("member", new Member());
+        model.addAttribute("member", Member.builder().build());
         return "./main/register";
     }
 }
