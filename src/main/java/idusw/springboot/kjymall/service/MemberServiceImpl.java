@@ -1,25 +1,41 @@
 package idusw.springboot.kjymall.service;
 
+import idusw.springboot.kjymall.entitiy.MemberEntitiy;
 import idusw.springboot.kjymall.model.Member;
 import idusw.springboot.kjymall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
-    private final MemberRepository memberRepository;
+
+    final MemberRepository memberRepository;
+    public MemberServiceImpl(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
 
     @Override
-    public void create(Member member) {
-
+    public int create(Member member) {
+        // Member 객체를 활용하여서 MemberEntity 객체를
+        MemberEntitiy entitiy = dtoToEntitiy(member);
+        if(memberRepository.save(entitiy) != null)
+            return 1;
+        else
+            return 0;
     }
 
     @Override
     public Member readById(Long idx) {
+        return null;
+    }
+
+    @Override
+    public Member readByIdx(Long idx) { // loginById 와 매우 흡사
+        Optional<MemberEntitiy> memberOptional = memberRepository.findById(idx);
         return null;
     }
 
@@ -29,19 +45,22 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void update(Member member) {
-
+    public int update(Member member) {
+        return 0;
     }
 
     @Override
-    public void delete(Member member) {
-
+    public int delete(Member member) {
+        return 0;
     }
 
     @Override
     public Member loginById(Member member) {
         //MemberRepository 메소드 호출
-        memberRepository.findById(member.getIdx());
-        return null;
+        Optional<Member> memberOptional  = memberRepository.findByIdAndPw(member.getId(), member.getPw());
+        if(memberOptional.isPresent())
+            return entitiyToDto(memberOptional.get());
+        else
+            return null;
     }
 }

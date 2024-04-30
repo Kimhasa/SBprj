@@ -10,7 +10,7 @@ import lombok.*;
 //@AllArgsConstructor
 
 @Data
-@Builder
+@Builder // 디자인패턴중 하나로 생성시 명확성을 제공함
 public class Member { // DTO or VO(vlaueable Object)
 
     private Long idx;

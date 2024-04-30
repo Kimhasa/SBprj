@@ -6,12 +6,14 @@ import idusw.springboot.kjymall.model.Member;
 import java.util.List;
 
 public interface MemberService {
-    void create(Member member);
+    // 데이터 기본 연산 : C.R.U.D
+    int create(Member member);
     Member readById(Long idx);
     List<Member> readAll();
-    void update(Member member);
-    void delete(Member member);
+    int update(Member member);
+    int delete(Member member);
 
+    // 사용자 정의 연산 : custom methods
     Member loginById(Member member); // id // pw
 
     default MemberEntitiy dtoToEntitiy(Member member){
@@ -26,7 +28,7 @@ public interface MemberService {
         return entitiy;
     }
 
-    default Member entitiyToDto(MemberEntitiy entitiy){
+    default Member entitiyToDto(Member entitiy){
         Member member = Member.builder()
                 .idx(entitiy.getIdx())
                 .id(entitiy.getId())
@@ -37,4 +39,6 @@ public interface MemberService {
 
         return member;
     }
+
+    Member readByIdx(Long idx);
 }
