@@ -1,44 +1,40 @@
 package idusw.springboot.kjymall.service;
 
-import idusw.springboot.kjymall.entitiy.MemberEntitiy;
+import idusw.springboot.kjymall.entity.MemberEntity;
 import idusw.springboot.kjymall.model.Member;
-
 import java.util.List;
 
 public interface MemberService {
-    // 데이터 기본 연산 : C.R.U.D
-    int create(Member member);
-    Member readById(Long idx);
-    List<Member> readAll();
-    int update(Member member);
-    int delete(Member member);
+    // interface : 외부 상호 작용 방법 제시
+    // C.R.U.D :
+    int create(Member dto);
+    Member read(Member dto);
+    List<Member> readList();
+    int update(Member dto);
+    int delete(Member dto);
 
-    // 사용자 정의 연산 : custom methods
-    Member loginById(Member member); // id // pw
-
-    default MemberEntitiy dtoToEntitiy(Member member){
-        MemberEntitiy entitiy = MemberEntitiy.builder()
+    Member login(Member dto); // dto 객체에 id/pw를 전달해줌
+    // Member -> MemberEntity: Repository에서는 MemberEntity를 다룸
+    default MemberEntity dtoToEntity(Member member) {
+        MemberEntity entity = MemberEntity.builder()
                 .idx(member.getIdx())
                 .id(member.getId())
                 .pw(member.getPw())
                 .name(member.getName())
                 .email(member.getEmail())
                 .build();
-
-        return entitiy;
+        return entity;
     }
 
-    default Member entitiyToDto(Member entitiy){
+    // MemberEntity -> : Controller에서는 Member를 다룸
+    default Member entityToDto(MemberEntity entity) {
         Member member = Member.builder()
-                .idx(entitiy.getIdx())
-                .id(entitiy.getId())
-                .pw(entitiy.getPw())
-                .name(entitiy.getName())
-                .email(entitiy.getEmail())
+                .idx(entity.getIdx())
+                .id(entity.getId())
+                .pw(entity.getPw())
+                .name(entity.getName())
+                .email(entity.getEmail())
                 .build();
-
         return member;
     }
-
-    Member readByIdx(Long idx);
 }

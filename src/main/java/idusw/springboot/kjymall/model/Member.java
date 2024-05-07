@@ -1,26 +1,22 @@
 package idusw.springboot.kjymall.model;
 
+
 import lombok.*;
 
-// boilerplate code : 상용구 코드, 뻔한 코드
-// Annotation : 컴파일러에게 처리를 요청하는 부연 설명
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-
-@Data
-@Builder // 디자인패턴중 하나로 생성시 명확성을 제공함
-public class Member { // DTO or VO(vlaueable Object)
-
+// lombok annotation - boilerplate code를 다루기 위한 라이브러리
+// POJO, Beans
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member { // POJO : plain old java object = java beans
     private Long idx;
-
     private String id;
-
     private String pw;
-
     private String name;
-
     private String email;
+
 
 }
